@@ -1,14 +1,14 @@
 from datetime import datetime
 
-def identifica_engarrafamento(speed_reading_intervals, distance, city_origin, city_destination):
+def detect_jam(speed_reading_intervals, distance, city_origin, city_destination):
     jams = []
     for item in speed_reading_intervals:
         if item.speed == 'TRAFFIC_JAM':
             jams.append(item)
-            detecta_proximidade(item, speed_reading_intervals, distance, city_origin, city_destination)
+            detect_proximity(item, speed_reading_intervals, distance, city_origin, city_destination)
     return jams
 
-def detecta_proximidade(item, speed_reading_intervals, distance, city_origin, city_destination):
+def detect_proximity(item, speed_reading_intervals, distance, city_origin, city_destination):
     last_point = speed_reading_intervals[-1].end_polyline_point_index
 
     initial_km = round(item.start_polyline_point_index*distance/last_point, 2)

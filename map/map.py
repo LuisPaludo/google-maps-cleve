@@ -1,7 +1,7 @@
 import requests
 from decouple import config
 
-def busca_mapa(city_origin: str, city_destination: str) -> tuple:
+def retrieve_info(city_origin: str, city_destination: str) -> tuple:
 
     url = "https://routes.googleapis.com/directions/v2:computeRoutes"
 
@@ -32,14 +32,14 @@ def busca_mapa(city_origin: str, city_destination: str) -> tuple:
         routes = response_json["routes"][0]
         legs = routes["legs"]
         encoded_polyline = legs[0]["polyline"]["encodedPolyline"]
-        speedReadingIntervals = legs[0]["travelAdvisory"]["speedReadingIntervals"]
-        distance = extrair_float(routes['localizedValues']['distance']['text'])
+        jam_info = legs[0]["travelAdvisory"]["speedReadingIntervals"]
+        distance = extract_float(routes['localizedValues']['distance']['text'])
     else:
         print(f"Erro: {response.status_code}, {response.text}")
 
-    return encoded_polyline, speedReadingIntervals, distance
+    return encoded_polyline, jam_info, distance
 
-def extrair_float(distancia_str: str) -> float:
-    numero_str = ''.join(c for c in distancia_str if c.isdigit() or c == ',')
-    numero_str = numero_str.replace(',', '.')
-    return round(float(numero_str), 2)
+def extract_float(distance_str: str) -> float:
+    number_str = ''.join(c for c in distance_str if c.isdigit() or c == ',')
+    number_str = number_str.replace(',', '.')
+    return round(float(number_str), 2)
