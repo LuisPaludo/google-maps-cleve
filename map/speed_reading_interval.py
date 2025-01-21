@@ -5,6 +5,9 @@ class JamInfo:
         self.start_polyline_point_index = start_polyline_point_index
         self.end_polyline_point_index = end_polyline_point_index
         self.speed = speed
+        self.initial_km = None
+        self.final_km = None
+        self.current_time = None
 
     def __repr__(self) -> str:
         return (f"JamInfo("
